@@ -86,5 +86,3 @@ def borrar_alumno_por_id(id:int, sesion:Session=Depends(generador_sesion)):
     repo.borra_fotos_por_id_alumnos(sesion, id)
     repo.borra_alumno_por_id(sesion, id)
     return {"Status_borrado", "ok"}
-
-# Finalizado

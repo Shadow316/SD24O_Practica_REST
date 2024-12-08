@@ -117,5 +117,3 @@ def borra_calificaciones_por_id(session:Session, id:int):
         "mensaje" : "Calificación borrada por id"
     }
     return respuesta
-
-# Finalizado
