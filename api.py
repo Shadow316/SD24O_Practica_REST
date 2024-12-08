@@ -12,3 +12,10 @@ from orm.config import generador_sesion # Generador de sesiones
 # Se crea el servidor
 app = FastAPI()
 
+# GET ALUMNOS
+
+# get("/alumnos”)
+@app.get("/alumnos")
+def lista_alumnos(session:Session=Depends(generador_sesion)):
+    print("API consultando a los alumnos.")
+    return repo.devuelve_alumnos(session)
