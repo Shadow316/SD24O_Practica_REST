@@ -25,3 +25,4 @@ def devuelve_fotos(session:Session):
 def foto_por_id(session:Session, id_foto:int):
     print("SELECT * FROM app.fotos WHERE id = ", id_foto)
     return session.query(modelos.Foto).filter(modelos.Foto.id == id_foto).first()
+
