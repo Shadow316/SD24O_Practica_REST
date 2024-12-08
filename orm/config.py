@@ -20,3 +20,5 @@ def generador_sesion():
         sesion.close()
 
 BaseClass = declarative_base()
+
+# Listo
