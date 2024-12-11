@@ -42,7 +42,7 @@ def devuelve_calificaciones(session:Session):
 # SELECT * FROM app.calificaciones WHERE id={id_fo}
 def calificaciones_por_id(session:Session, id_calificacion:int):
     print("SELECT * FROM app.calificaciones WHERE id = ", id_calificacion)
-    return session.query(modelos.Calificacion).filter(modelos.Calificacion.id == id_calificacion).all()
+    return session.query(modelos.Calificacion).filter(modelos.Calificacion.id == id_calificacion).first()
 
 # SELECT * FROM app.calificaciones WHERE id_alumnos={id_al}
 def calificaciones_por_id_alumno(session:Session, id_alumno:int):
@@ -122,7 +122,7 @@ def borra_calificaciones_por_id(session:Session, id:int):
 # PRACTICA 2
 
 # post
-def guardar_alumno(session:Session, alu_nuevo:esquemas.AlumnoBase): #Alumno model?
+def guardar_alumno(session:Session, alu_nuevo:esquemas.AlumnoBase): 
     alu_bd = modelos.Alumno()
     alu_bd.nombre = alu_nuevo.nombre
     alu_bd.edad = alu_nuevo.edad
@@ -138,17 +138,16 @@ def guardar_alumno(session:Session, alu_nuevo:esquemas.AlumnoBase): #Alumno mode
     return alu_bd
 
 # put
-def actualizar_alumno(sesion:Session, id_alumno:int, alu_esquema:esquemas.AlumnoBase): #Alumno model?
+def actualizar_alumno(sesion:Session, id_alumno:int, alu_esquema:esquemas.AlumnoBase): 
     alu_db = alumno_por_id(sesion, id_alumno)
     if alu_db is not None:
         alu_db.nombre = alu_esquema.nombre
         alu_db.edad = alu_esquema.edad
         alu_db.domicilio = alu_esquema.domicilio
         alu_db.carrera = alu_esquema.carrera
-        alu_db.trimestre = alu_esquema.trimsestre
+        alu_db.trimestre = alu_esquema.trimestre
         alu_db.email = alu_esquema.email
         alu_db.password = alu_esquema.password
-
         sesion.commit()
         sesion.refresh(alu_db)
         print(alu_esquema)
@@ -157,21 +156,67 @@ def actualizar_alumno(sesion:Session, id_alumno:int, alu_esquema:esquemas.Alumno
         respuesta = {"mensaje" : "No existe el alumno"}
         return respuesta
 
+# post("/alumnos/{id}/calificaciones")
 def guardar_calificacion_por_id_alumno(sesion:Session, id_alumno:int, cal_nueva:esquemas.CalificacioneBase):
+    cal_bus = alumno_por_id(sesion, id_alumno)
     cal_bd = modelos.Calificacion()
-    if id_alumno == 2
-    
-    
-    alu_bd = modelos.Alumno()
-    alu_bd.nombre = alu_nuevo.nombre
-    alu_bd.edad = alu_nuevo.edad
-    alu_bd.domicilio = alu_nuevo.domicilio
-    alu_bd.carrera = alu_nuevo.carrera
-    alu_bd.trimestre = alu_nuevo.trimestre
-    alu_bd.email = alu_nuevo.email
-    alu_bd.password = alu_nuevo.password
+    if cal_bus is not None:
+        cal_bd.id_alumno = id_alumno
+        cal_bd.uea = cal_nueva.uea
+        cal_bd.calificacion = cal_nueva.calificacion
+        sesion.add(cal_bd)
+        sesion.commit()
+        sesion.refresh(cal_bd)
+        return cal_bd
+    else:
+        respuesta = {"mensaje" : "No hay alumno para actualizar calificación"}
+        return respuesta
 
-    session.add(alu_bd)
-    session.commit()
-    session.refresh(alu_bd)
-    return alu_bd
+# put
+def actualizar_calificacion_por_id(sesion:Session, id_calificacion:int, calificacion_esquema:esquemas.CalificacioneBase):
+    cal_bd = calificaciones_por_id(sesion, id_calificacion)
+    if cal_bd is not None:
+        cal_bd.id_alumno = calificacion_esquema.id_alumno
+        cal_bd.uea = calificacion_esquema.uea
+        cal_bd.calificacion = calificacion_esquema.calificacion
+        sesion.commit()
+        sesion.refresh(cal_bd)
+        print(calificacion_esquema)
+        return calificacion_esquema
+    else:
+        respuesta = {"mensaje" : "No existe la calificación"}
+        return respuesta
+    
+    
+# post("/alumnos/{id}/fotos")
+def guardar_foto_por_id_alumno(sesion:Session, id_alumno:int, foto_nueva:esquemas.FotoBase):
+    foto_bus = alumno_por_id(sesion, id_alumno)
+    foto_bd = modelos.Foto()
+    if foto_bus is not None:
+        foto_bd.id_alumno = id_alumno
+        foto_bd.titulo = foto_nueva.titulo
+        foto_bd.descripcion = foto_nueva.descripcion
+        foto_bd.ruta = foto_nueva.ruta
+        sesion.add(foto_bd)
+        sesion.commit()
+        sesion.refresh(foto_bd)
+        return foto_bd
+    else:
+        respuesta = {"mensaje" : "No hay alumno para actualizar foto"}
+        return respuesta
+    
+# put("/fotos/{id}")
+def actualizar_foto_por_id(sesion:Session, id_foto, foto_esquema:esquemas.FotoBase):
+    foto_bd = foto_por_id(sesion, id_foto)
+    if foto_bd is not None:
+        foto_bd.id_alumno = foto_esquema.id_alumno
+        foto_bd.titulo = foto_esquema.titulo
+        foto_bd.descripcion = foto_esquema.descripcion
+        foto_bd.ruta = foto_esquema.ruta
+        sesion.commit()
+        sesion.refresh(foto_bd)
+        print(foto_esquema)
+        return foto_esquema
+    else:
+        respuesta = {"mensaje" : "No existe la foto"}
+        return respuesta

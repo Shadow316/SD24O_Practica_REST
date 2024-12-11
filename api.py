@@ -101,3 +101,12 @@ def guardar_alumno(alumno:esquemas.AlumnoBase, sesion:Session=Depends(generador_
 def actualizar_alumno(id:int, info_alumno:esquemas.AlumnoBase, sesion:Session=Depends(generador_sesion)):
     return repo.actualizar_alumno(sesion, id, info_alumno)
 
+# post("/alumnos/{id}/calificaciones")
+@app.post("/alumnos/{id}/calificaciones")
+def guardar_calificacion_por_id_alumno(id:int, calificacion:esquemas.CalificacioneBase, sesion:Session=Depends(generador_sesion)):
+    return repo.guardar_calificacion_por_id_alumno(sesion, id, calificacion)
+
+# put("/calificaciones/{id}")
+@app.put("/calificaciones/{id}")
+def actualizar_calificacion_por_id(id:int, info_calificacion:esquemas.CalificacioneBase, sesion:Session=Depends(generador_sesion)):
+    return repo.actualizar_calificacion_por_id(sesion, id, info_calificacion)
