@@ -1,3 +1,4 @@
+import orm.esquemas as esquemas
 import orm.modelos as modelos #accedemos a modelos.py
 from sqlalchemy.orm import Session
 from sqlalchemy import and_
@@ -117,3 +118,60 @@ def borra_calificaciones_por_id(session:Session, id:int):
         "mensaje" : "Calificación borrada por id"
     }
     return respuesta
+
+# PRACTICA 2
+
+# post
+def guardar_alumno(session:Session, alu_nuevo:esquemas.AlumnoBase): #Alumno model?
+    alu_bd = modelos.Alumno()
+    alu_bd.nombre = alu_nuevo.nombre
+    alu_bd.edad = alu_nuevo.edad
+    alu_bd.domicilio = alu_nuevo.domicilio
+    alu_bd.carrera = alu_nuevo.carrera
+    alu_bd.trimestre = alu_nuevo.trimestre
+    alu_bd.email = alu_nuevo.email
+    alu_bd.password = alu_nuevo.password
+
+    session.add(alu_bd)
+    session.commit()
+    session.refresh(alu_bd)
+    return alu_bd
+
+# put
+def actualizar_alumno(sesion:Session, id_alumno:int, alu_esquema:esquemas.AlumnoBase): #Alumno model?
+    alu_db = alumno_por_id(sesion, id_alumno)
+    if alu_db is not None:
+        alu_db.nombre = alu_esquema.nombre
+        alu_db.edad = alu_esquema.edad
+        alu_db.domicilio = alu_esquema.domicilio
+        alu_db.carrera = alu_esquema.carrera
+        alu_db.trimestre = alu_esquema.trimsestre
+        alu_db.email = alu_esquema.email
+        alu_db.password = alu_esquema.password
+
+        sesion.commit()
+        sesion.refresh(alu_db)
+        print(alu_esquema)
+        return alu_esquema
+    else:
+        respuesta = {"mensaje" : "No existe el alumno"}
+        return respuesta
+
+def guardar_calificacion_por_id_alumno(sesion:Session, id_alumno:int, cal_nueva:esquemas.CalificacioneBase):
+    cal_bd = modelos.Calificacion()
+    if id_alumno == 2
+    
+    
+    alu_bd = modelos.Alumno()
+    alu_bd.nombre = alu_nuevo.nombre
+    alu_bd.edad = alu_nuevo.edad
+    alu_bd.domicilio = alu_nuevo.domicilio
+    alu_bd.carrera = alu_nuevo.carrera
+    alu_bd.trimestre = alu_nuevo.trimestre
+    alu_bd.email = alu_nuevo.email
+    alu_bd.password = alu_nuevo.password
+
+    session.add(alu_bd)
+    session.commit()
+    session.refresh(alu_bd)
+    return alu_bd
