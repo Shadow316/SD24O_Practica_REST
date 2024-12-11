@@ -120,3 +120,5 @@ def guardar_calificacion_por_id_alumno(id:int, foto:esquemas.FotoBase, sesion:Se
 @app.put("/fotos/{id}")
 def actualizar_foto_por_id(id:int, info_fotos:esquemas.FotoBase, sesion:Session=Depends(generador_sesion)):
     return repo.actualizar_foto_por_id(sesion, id, info_fotos)
+
+# Listo para entregar práctica 2

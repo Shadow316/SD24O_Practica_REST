@@ -23,4 +23,4 @@ class FotoBase(BaseModel):
     descripcion:str
     ruta:str
 
-# Se crearon los esquemas para práctica 2
+# Se crearon los esquemas para práctica 2.

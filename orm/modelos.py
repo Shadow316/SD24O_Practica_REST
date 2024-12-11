@@ -34,4 +34,4 @@ class Foto(BaseClass):
     ruta = Column(String(50))
     id_alumno = Column(Integer, ForeignKey(Alumno.id))
 
-# Sin modificaciones para práctica 2
+# Sin modificaciones para práctica 2 .

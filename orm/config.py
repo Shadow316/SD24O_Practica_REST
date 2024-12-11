@@ -21,4 +21,4 @@ def generador_sesion():
 
 BaseClass = declarative_base()
 
-# Listo y sin modificaciones para práctica 2
+# Listo y sin modificaciones para práctica 2.

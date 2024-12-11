@@ -221,3 +221,5 @@ def actualizar_foto_por_id(sesion:Session, id_foto, foto_esquema:esquemas.FotoBa
     else:
         respuesta = {"mensaje" : "No existe la foto"}
         return respuesta
+    
+# Listo para entregar práctica 2
