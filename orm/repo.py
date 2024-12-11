@@ -1,7 +1,6 @@
 import orm.esquemas as esquemas
 import orm.modelos as modelos #accedemos a modelos.py
 from sqlalchemy.orm import Session
-from sqlalchemy import and_
 
 # ALUMNOS MOSTRAR
 
@@ -70,7 +69,8 @@ def borra_calificaciones_por_id_alumnos(session:Session, id_alumno:int):
     print("DELETE FROM app.calificaciones WHERE id_alumnos = ", id_alumno)
     cali = calificaciones_por_id_alumno(session, id_alumno)
     if cali is not None:
-        session.delete(cali)
+        for calificacion in cali:
+            session.delete(calificacion)
         session.commit()
 
     respuesta = {
@@ -83,7 +83,8 @@ def borra_fotos_por_id_alumnos(session:Session, id_alumno:int):
     print("DELETE FROM app.fotos WHERE id_alumnos = ", id_alumno)
     foto = foto_por_id_alumnos(session, id_alumno)
     if foto is not None:
-        session.delete(foto)
+        for fotito in foto:
+            session.delete(fotito)
         session.commit()
 
     respuesta = {
@@ -172,7 +173,7 @@ def guardar_calificacion_por_id_alumno(sesion:Session, id_alumno:int, cal_nueva:
         respuesta = {"mensaje" : "No hay alumno para actualizar calificación"}
         return respuesta
 
-# put
+# put s
 def actualizar_calificacion_por_id(sesion:Session, id_calificacion:int, calificacion_esquema:esquemas.CalificacioneBase):
     cal_bd = calificaciones_por_id(sesion, id_calificacion)
     if cal_bd is not None:
