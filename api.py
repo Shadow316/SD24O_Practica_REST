@@ -5,6 +5,7 @@ import shutil
 import os
 import uuid
 import orm.repo as repo # Función para hacer las consultas a la BD
+import orm.esquemas as esquemas
 from sqlalchemy.orm import Session
 from sqlalchemy import and_
 from orm.config import generador_sesion # Generador de sesiones
@@ -86,3 +87,17 @@ def borrar_alumno_por_id(id:int, sesion:Session=Depends(generador_sesion)):
     repo.borra_fotos_por_id_alumnos(sesion, id)
     repo.borra_alumno_por_id(sesion, id)
     return {"Status_borrado", "ok"}
+
+# PRACTICA 2
+
+# post("/alumnos”)
+@app.post("/alumnos")
+def guardar_alumno(alumno:esquemas.AlumnoBase, sesion:Session=Depends(generador_sesion)):
+    print(alumno)
+    return repo.guardar_alumno(sesion, alumno)
+
+# put("/alumnos/{id})
+@app.put("/alumnos/{id}")
+def actualizar_alumno(id:int, info_alumno:esquemas.AlumnoBase, sesion:Session=Depends(generador_sesion)):
+    return repo.actualizar_alumno(sesion, id, info_alumno)
+
